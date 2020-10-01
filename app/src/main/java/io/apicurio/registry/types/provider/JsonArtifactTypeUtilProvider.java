@@ -24,7 +24,9 @@ import io.apicurio.registry.content.extract.ContentExtractor;
 import io.apicurio.registry.content.extract.JsonContentExtractor;
 import io.apicurio.registry.logging.Logged;
 import io.apicurio.registry.rules.compatibility.CompatibilityChecker;
+import io.apicurio.registry.rules.compatibility.CompatibilityChecker2;
 import io.apicurio.registry.rules.compatibility.JsonCompatibilityChecker;
+import io.apicurio.registry.rules.compatibility.JsonCompatibilityChecker2;
 import io.apicurio.registry.rules.validity.ContentValidator;
 import io.apicurio.registry.rules.validity.JsonSchemaContentValidator;
 import io.apicurio.registry.types.ArtifactType;
@@ -43,6 +45,11 @@ public class JsonArtifactTypeUtilProvider extends AbstractArtifactTypeUtilProvid
     @Override
     protected CompatibilityChecker createCompatibilityChecker() {
         return new JsonCompatibilityChecker();
+    }
+
+    @Override
+    protected CompatibilityChecker2 createCompatibilityChecker2() {
+        return new JsonCompatibilityChecker2();
     }
 
     @Override

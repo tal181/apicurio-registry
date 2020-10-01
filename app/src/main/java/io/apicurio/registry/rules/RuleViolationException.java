@@ -20,7 +20,9 @@ import io.apicurio.registry.types.RegistryException;
 import io.apicurio.registry.types.RuleType;
 import lombok.Getter;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Exception thrown when a configured rule is violated, rejecting an artifact content
@@ -33,6 +35,9 @@ public class RuleViolationException extends RegistryException {
     
     @Getter
     private final RuleType ruleType;
+
+    @Getter
+    private final Set diffs;
     
     @Getter
     private final Optional<String> ruleConfiguration;
@@ -41,11 +46,22 @@ public class RuleViolationException extends RegistryException {
      * Constructor.
      * @param ruleConfiguration is optional, can be null
      */
-    public RuleViolationException(String message, RuleType ruleType, String ruleConfiguration) {
+    public RuleViolationException(String message, RuleType ruleType, String ruleConfiguration, Set diffs) {
         super(message);
         this.ruleType = ruleType;
         this.ruleConfiguration = Optional.ofNullable(ruleConfiguration);
+        this.diffs = diffs;
     }
+//
+//    /**
+//     * Constructor.
+//     * @param ruleConfiguration is optional, can be null
+//     */
+//    public RuleViolationException(String message, RuleType ruleType, String ruleConfiguration) {
+//        super(message);
+//        this.ruleType = ruleType;
+//        this.ruleConfiguration = Optional.ofNullable(ruleConfiguration);
+//    }
 
     /**
      * Constructor.
@@ -55,5 +71,6 @@ public class RuleViolationException extends RegistryException {
         super(message, cause);
         this.ruleType = ruleType;
         this.ruleConfiguration = Optional.ofNullable(ruleConfiguration);
+        this.diffs = new HashSet();
     }
 }

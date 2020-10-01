@@ -282,7 +282,8 @@
                             <archiverConfig>
                                 <defaultDirectoryMode>0755</defaultDirectoryMode>
                             </archiverConfig>
-                            <tarLongFileMode>${tar.long.file.mode}</tarLongFileMode>
+                            <tarLongFileMode>posix</tarLongFileMode>
+                            <outputDirectory>${project.build.directory}</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>

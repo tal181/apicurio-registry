@@ -82,19 +82,19 @@
     <modules>
         <module>common</module>
         <module>app</module>
-        <module>client</module>
-        <module>ui</module>
-        <module>utils/converter</module>
-        <module>utils/kafka</module>
-        <module>utils/maven-plugin</module>
-        <module>utils/serde</module>
-        <module>utils/tools</module>
-        <module>utils/tests</module>
-        <module>search/client</module>
-        <module>search/connector</module>
-        <module>distro</module>
-        <module>docs</module>
-        <module>tests</module>
+<!--        <module>client</module>-->
+<!--        <module>ui</module>-->
+<!--        <module>utils/converter</module>-->
+<!--        <module>utils/kafka</module>-->
+<!--        <module>utils/maven-plugin</module>-->
+<!--        <module>utils/serde</module>-->
+<!--        <module>utils/tools</module>-->
+<!--        <module>utils/tests</module>-->
+<!--        <module>search/client</module>-->
+<!--        <module>search/connector</module>-->
+<!--        <module>distro</module>-->
+<!--        <module>docs</module>-->
+<!--        <module>tests</module>-->
     </modules>
 
     <properties>
@@ -114,7 +114,7 @@
         <yarn.version>1.22.4</yarn.version>
         
         <!-- Quarkus Version -->
-        <quarkus.version>1.5.2.Final</quarkus.version>
+        <quarkus.version>1.5.0.Final</quarkus.version>
 
         <!-- Jandex -->
         <jandex.version>1.0.8</jandex.version>

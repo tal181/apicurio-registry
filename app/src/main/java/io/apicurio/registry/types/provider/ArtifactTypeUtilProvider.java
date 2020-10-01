@@ -19,6 +19,7 @@ package io.apicurio.registry.types.provider;
 import io.apicurio.registry.content.canon.ContentCanonicalizer;
 import io.apicurio.registry.content.extract.ContentExtractor;
 import io.apicurio.registry.rules.compatibility.CompatibilityChecker;
+import io.apicurio.registry.rules.compatibility.CompatibilityChecker2;
 import io.apicurio.registry.rules.validity.ContentValidator;
 import io.apicurio.registry.types.ArtifactType;
 
@@ -36,6 +37,8 @@ public interface ArtifactTypeUtilProvider {
     ArtifactType getArtifactType();
 
     CompatibilityChecker getCompatibilityChecker();
+
+    CompatibilityChecker2 getCompatibilityChecker2();
 
     ContentCanonicalizer getContentCanonicalizer();
 

@@ -249,3 +249,5 @@ get stored in various modules' `target` directories.  These are then recognized 
 but are sometimes deleted during the Eclipse "clean" phase.  To prevent Eclipse from
 over-cleaning these files, find the **os-maven-plugin-1.6.2.jar** JAR in your 
 `.m2/repository` directory and copy it into `$ECLIPSE_HOME/dropins`.
+
+mvn clean install quarkus:dev -DskipTests

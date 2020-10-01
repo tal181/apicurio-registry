@@ -53,7 +53,7 @@ public class JsonSchemaContentValidator implements ContentValidator {
                     factory.getSchema(node);
                 }
             } catch (Exception e) {
-                throw new InvalidContentException("Syntax violation for JSON Schema artifact.", e);
+                throw new InvalidContentException(e.getMessage(), e);
             }
         }
     }

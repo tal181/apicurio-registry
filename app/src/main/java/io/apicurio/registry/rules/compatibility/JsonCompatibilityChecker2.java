@@ -16,12 +16,12 @@
 
 package io.apicurio.registry.rules.compatibility;
 
-import io.apicurio.registry.rules.compatibility.jsonschema.JsonSchemaDiffLibrary;
-
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.function.BiPredicate;
 
-import static io.apicurio.registry.rules.compatibility.jsonschema.JsonSchemaDiffLibrary.isCompatible;
+import static io.apicurio.registry.rules.compatibility.jsonschema.JsonSchemaDiffLibrary.isCompatible2;
 import static java.util.Objects.requireNonNull;
 
 /**
@@ -29,39 +29,39 @@ import static java.util.Objects.requireNonNull;
  * @author Jonathan Halliday
  * @author Jakub Senko <jsenko@redhat.com>
  */
-public class JsonCompatibilityChecker implements CompatibilityChecker { // TODO rename to JsonSchemaCompatibilityChecker
+public class JsonCompatibilityChecker2 implements CompatibilityChecker2 { // TODO rename to JsonSchemaCompatibilityChecker
 
     /**
-     * @see CompatibilityChecker#isCompatibleWith(io.apicurio.registry.rules.compatibility.CompatibilityLevel, java.util.List, java.lang.String)
+     * @see CompatibilityChecker#isCompatibleWith(CompatibilityLevel, List, String)
      */
     @Override
-    public boolean isCompatibleWith(CompatibilityLevel compatibilityLevel, List<String> existingSchemas, String proposedSchema) {
+    public Set isCompatibleWith(CompatibilityLevel compatibilityLevel, List<String> existingSchemas, String proposedSchema) {
         requireNonNull(compatibilityLevel, "compatibilityLevel MUST NOT be null");
         requireNonNull(existingSchemas, "existingSchemas MUST NOT be null");
         requireNonNull(proposedSchema, "proposedSchema MUST NOT be null");
 
         if (existingSchemas.isEmpty()) {
-            return true;
+            return new HashSet();
         }
         // TODO There is more information available on which differences are causing an issue. Make it visible to users.
         switch (compatibilityLevel) {
             case BACKWARD:
-                return isCompatible(existingSchemas.get(existingSchemas.size() - 1), proposedSchema);
-            case BACKWARD_TRANSITIVE: {
-                return transitively(existingSchemas, proposedSchema, JsonSchemaDiffLibrary::isCompatible);
-            }
+                return isCompatible2(existingSchemas.get(existingSchemas.size() - 1), proposedSchema);
+//            case BACKWARD_TRANSITIVE: {
+//                return transitively(existingSchemas, proposedSchema, JsonSchemaDiffLibrary::isCompatible);
+//            }
             case FORWARD:
-                return isCompatible(proposedSchema, existingSchemas.get(existingSchemas.size() - 1));
-            case FORWARD_TRANSITIVE:
-                return transitively(existingSchemas, proposedSchema, (e, p) -> isCompatible(p, e));
-            case FULL:
-                return isCompatible(existingSchemas.get(existingSchemas.size() - 1), proposedSchema) &&
-                    isCompatible(proposedSchema, existingSchemas.get(existingSchemas.size() - 1));
-            case FULL_TRANSITIVE:
-                return transitively(existingSchemas, proposedSchema, JsonSchemaDiffLibrary::isCompatible) &&
-                    transitively(existingSchemas, proposedSchema, (e, p) -> isCompatible(p, e));
+                return isCompatible2(proposedSchema, existingSchemas.get(existingSchemas.size() - 1));
+//            case FORWARD_TRANSITIVE:
+//                return transitively(existingSchemas, proposedSchema, (e, p) -> isCompatible(p, e));
+//            case FULL:
+//                return isCompatible(existingSchemas.get(existingSchemas.size() - 1), proposedSchema) &&
+//                    isCompatible(proposedSchema, existingSchemas.get(existingSchemas.size() - 1));
+//            case FULL_TRANSITIVE:
+//                return transitively(existingSchemas, proposedSchema, JsonSchemaDiffLibrary::isCompatible) &&
+//                    transitively(existingSchemas, proposedSchema, (e, p) -> isCompatible(p, e));
             default:
-                return true;
+                return new HashSet();
         }
     }
 
@@ -79,5 +79,3 @@ public class JsonCompatibilityChecker implements CompatibilityChecker { // TODO 
         return true;
     }
 }
-
-

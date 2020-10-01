@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import java.util.Set;
+
 
 /**
  * Root Type for Error
@@ -26,6 +28,8 @@ public class Error {
     private Integer errorCode;
     @JsonProperty(value = "detail", required = false)
     private String detail;
+    @JsonProperty(value = "diffs", required = false)
+    private Set diffs;
 
     @JsonProperty("message")
     public String getMessage() {
@@ -55,6 +59,16 @@ public class Error {
     @JsonProperty("detail")
     public void setDetail(String detail) {
         this.detail = detail;
+    }
+
+    @JsonProperty("diffs")
+    public Set getDiffs() {
+        return diffs;
+    }
+
+    @JsonProperty("diffs")
+    public void setDiffs(Set diffs) {
+        this.diffs = diffs;
     }
 
 }

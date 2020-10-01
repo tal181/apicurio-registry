@@ -105,13 +105,19 @@ public class RegistryExceptionMapper implements ExceptionMapper<Throwable> {
      */
     @Override
     public Response toResponse(Throwable t) {
-        Response.ResponseBuilder builder;
-        int code;
+        Response.ResponseBuilder builder = null;
+        int code = 0;
+        Set diffs = null;
         if (t instanceof WebApplicationException) {
             WebApplicationException wae = (WebApplicationException) t;
             Response response = wae.getResponse();
             builder = Response.fromResponse(response);
             code = response.getStatus();
+        } else if (t instanceof RuleViolationException) {
+            RuleViolationException re = (RuleViolationException) t;
+            code = CODE_MAP.getOrDefault(t.getClass(), HTTP_BAD_REQUEST);
+            builder = Response.status(code);
+            diffs = re.getDiffs();
         } else {
             code = CODE_MAP.getOrDefault(t.getClass(), HTTP_INTERNAL_ERROR);
             builder = Response.status(code);
@@ -122,7 +128,7 @@ public class RegistryExceptionMapper implements ExceptionMapper<Throwable> {
             log.error(t.getMessage(), t);
         }
 
-        Error error = toError(t, code);
+        Error error = toError(t, code, diffs);
         if (isCompatEndpoint()) {
             error.setDetail(null);
         }
@@ -143,11 +149,12 @@ public class RegistryExceptionMapper implements ExceptionMapper<Throwable> {
         return false;
     }
 
-    private static Error toError(Throwable t, int code) {
+    private static Error toError(Throwable t, int code, Set diffs) {
         Error error = new Error();
         error.setErrorCode(code);
         error.setMessage(t.getLocalizedMessage());
         error.setDetail(getStackTrace(t));
+        error.setDiffs(diffs);
         return error;
     }
     
